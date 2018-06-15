@@ -5,7 +5,7 @@
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{EF437CDC-34E4-40F7-A9F2-8F6CEC81C49F}</ProjectGuid>
-        <OutputType>Exe</OutputType>
+        <OutputType>WinExe</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>DragonRider.Windows</RootNamespace>
         <AssemblyName>DragonRider.Windows</AssemblyName>
