@@ -1,4 +1,4 @@
-﻿using DragonRider.Shared;
+﻿using DragonRider.Shared.Game;
 
 namespace DragonRider.Windows
 {

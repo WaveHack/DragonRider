@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.ViewportAdapters;
 
-namespace DragonRider.Shared
+namespace DragonRider.Shared.Game
 {
     public class Game : Microsoft.Xna.Framework.Game
     {
@@ -62,7 +62,16 @@ namespace DragonRider.Shared
 
         protected override void Initialize()
         {
-            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 320, 240);
+            var viewportAdapter = new BoxingViewportAdapter(
+                Window,
+//#if WINDOWS
+                _graphics,
+//#else
+//                GraphicsDevice,
+//#endif
+                320,
+                180
+            );
             _camera = new Camera2D(viewportAdapter);
 
             base.Initialize();
@@ -93,7 +102,10 @@ namespace DragonRider.Shared
 
             var transformMatrix = _camera.GetViewMatrix();
 
-            _spriteBatch.Begin(transformMatrix: transformMatrix);
+            _spriteBatch.Begin(
+                transformMatrix: transformMatrix,
+                samplerState: SamplerState.PointClamp
+            );
             _spriteBatch.DrawString(
                 _font,
                 "Hello world!",
