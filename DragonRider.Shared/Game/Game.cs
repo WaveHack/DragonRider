@@ -72,11 +72,7 @@ namespace DragonRider.Shared.Game
             else if (keyboardState.IsKeyDown(Keys.D0))
                 _camera.Zoom = 1;
 
-            _camera.Position = new Vector2(
-                _camera.Position.X.Clamp(0, 100),
-                _camera.Position.Y.Clamp(0, 100)
-            );
-
+            _camera.Position = Vector2.Clamp(_camera.Position, new Vector2(0, 0), new Vector2(10, 20));
             _camera.Zoom = _camera.Zoom.Clamp(.1f, 2f);
 
             base.Update(gameTime);
