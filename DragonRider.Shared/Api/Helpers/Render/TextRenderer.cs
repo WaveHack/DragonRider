@@ -33,7 +33,8 @@ namespace DragonRider.Shared.Api.Helpers.Render
         public void DrawShadowed(string text, Vector2 position, Color color, float scale = 1)
         {
             // Shadow
-            _spriteBatch.DrawString(_spriteFont, text, position + new Vector2(1, 1), Color.Gray, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
+            _spriteBatch.DrawString(_spriteFont, text, position + new Vector2(1, 1), Color.Gray, 0, Vector2.Zero, scale,
+                SpriteEffects.None, 0);
 
             // Text
             _spriteBatch.DrawString(_spriteFont, text, position, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
@@ -42,10 +43,14 @@ namespace DragonRider.Shared.Api.Helpers.Render
         public void DrawStroked(string text, Vector2 position, Color color, float scale = 1)
         {
             // Stroke
-            _spriteBatch.DrawString(_spriteFont, text, position + new Vector2(0, -1), Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
-            _spriteBatch.DrawString(_spriteFont, text, position + new Vector2(0, 1), Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
-            _spriteBatch.DrawString(_spriteFont, text, position + new Vector2(-1, 0), Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
-            _spriteBatch.DrawString(_spriteFont, text, position + new Vector2(1, -0), Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
+            _spriteBatch.DrawString(_spriteFont, text, position + new Vector2(0, -1), Color.Black, 0f, Vector2.Zero,
+                scale, SpriteEffects.None, 0);
+            _spriteBatch.DrawString(_spriteFont, text, position + new Vector2(0, 1), Color.Black, 0f, Vector2.Zero,
+                scale, SpriteEffects.None, 0);
+            _spriteBatch.DrawString(_spriteFont, text, position + new Vector2(-1, 0), Color.Black, 0f, Vector2.Zero,
+                scale, SpriteEffects.None, 0);
+            _spriteBatch.DrawString(_spriteFont, text, position + new Vector2(1, -0), Color.Black, 0f, Vector2.Zero,
+                scale, SpriteEffects.None, 0);
 
             // Text
             _spriteBatch.DrawString(_spriteFont, text, position, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0);

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DragonRider.Shared.Api.DataTypes.Text;
 using DragonRider.Shared.Api.Extensions;
 using DragonRider.Shared.Api.Helpers.Render;
@@ -87,18 +87,6 @@ namespace DragonRider.Shared.Game
             base.Update(gameTime);
         }
 
-        public struct ColoredText
-        {
-            public readonly string Text;
-            public readonly Color Color;
-
-            public ColoredText(string text, Color color)
-            {
-                Text = text;
-                Color = color;
-            }
-        }
-
         protected override void Draw(GameTime gameTime)
         {
             _graphics.GraphicsDevice.Clear(Color.DarkGray);
@@ -129,9 +117,13 @@ namespace DragonRider.Shared.Game
             const int textHeight = 24;
 
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            _textRenderer.DrawShadowed("Camera: x" + _camera.Position.X.ToString("0.00") + " y" + _camera.Position.Y.ToString("0.00"), Vector2.Zero + new Vector2(0, textHeight * 0), Color.White, 2f);
-            _textRenderer.DrawShadowed("Zoom: " + _camera.Zoom.ToString("0.00"), Vector2.Zero + new Vector2(0, textHeight * 1), Color.White, 2f);
-            _textRenderer.DrawShadowed("Delta: " + deltaTime.ToString("0.0000"), Vector2.Zero + new Vector2(0, textHeight * 2), Color.White, 2f);
+            _textRenderer.DrawShadowed(
+                "Camera: x" + _camera.Position.X.ToString("0.00") + " y" + _camera.Position.Y.ToString("0.00"),
+                Vector2.Zero + new Vector2(0, textHeight * 0), Color.White, 2f);
+            _textRenderer.DrawShadowed("Zoom: " + _camera.Zoom.ToString("0.00"),
+                Vector2.Zero + new Vector2(0, textHeight * 1), Color.White, 2f);
+            _textRenderer.DrawShadowed("Delta: " + deltaTime.ToString("0.0000"),
+                Vector2.Zero + new Vector2(0, textHeight * 2), Color.White, 2f);
             _spriteBatch.End();
 
             base.Draw(gameTime);
