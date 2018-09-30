@@ -8,42 +8,10 @@ namespace DragonRider.Shared.Game
 {
     public class Game : Microsoft.Xna.Framework.Game
     {
-        /*
-        Constant Fields
-        Fields
-        Constructors
-        Finalizers (Destructors)
-        Delegates
-        Events
-        Enums
-        Interfaces
-        Properties
-        Indexers
-        Methods
-        Structs
-        Classes
-
-        public
-        internal
-        protected internal
-        protected
-        private
-
-        static
-        non-static
-
-        readonly
-        non-readonly
-        */
-
-        #region Fields
-
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Camera2D _camera;
         private SpriteFont _font;
-
-        #endregion
 
         public Game()
         {
@@ -58,8 +26,6 @@ namespace DragonRider.Shared.Game
             Content.RootDirectory = "Content";
         }
 
-        #region Methods
-
         protected override void Initialize()
         {
             var viewportAdapter = new BoxingViewportAdapter(
@@ -71,6 +37,8 @@ namespace DragonRider.Shared.Game
 //#endif
                 320,
                 180
+//                1348, 900,
+//                148, 140
             );
             _camera = new Camera2D(viewportAdapter);
 
@@ -81,7 +49,7 @@ namespace DragonRider.Shared.Game
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _font = Content.Load<SpriteFont>("Font");
+            _font = Content.Load<SpriteFont>("Fonts/FreePixel");
         }
 
         protected override void UnloadContent()
@@ -98,30 +66,76 @@ namespace DragonRider.Shared.Game
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            var transformMatrix = _camera.GetViewMatrix();
+            _graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin(
-                transformMatrix: transformMatrix,
+                transformMatrix: _camera.GetViewMatrix(),
                 samplerState: SamplerState.PointClamp
             );
-            _spriteBatch.DrawString(
+
+            void DrawOutline(SpriteBatch spriteBatch, SpriteFont spriteFont, string text, Vector2 position, Color color)
+            {
+                // Shadow
+//                spriteBatch.DrawString(spriteFont, text, position + new Vector2(1, 1), Color.Gray);
+
+                // Stroke
+                spriteBatch.DrawString(spriteFont, text, position + new Vector2(0, -1), Color.Black);
+                spriteBatch.DrawString(spriteFont, text, position + new Vector2(0, 1), Color.Black);
+                spriteBatch.DrawString(spriteFont, text, position + new Vector2(-1, 0), Color.Black);
+                spriteBatch.DrawString(spriteFont, text, position + new Vector2(1, 0), Color.Black);
+
+                spriteBatch.DrawString(spriteFont, text, position, color);
+            }
+
+            Vector2 pos = new Vector2(320, 180) / 2
+                          - _font.MeasureString("All your base are belong to us.\nAll your base are belong to us.") / 2;
+
+            DrawOutline(_spriteBatch, _font, "All your ", pos, Color.White);
+
+            Vector2 offset = _font.MeasureString("All your ");
+            offset.Y = 0;
+            DrawOutline(_spriteBatch, _font, "base", pos + offset, Color.Yellow);
+
+            offset = _font.MeasureString("All your base ");
+            offset.Y = 0;
+            DrawOutline(_spriteBatch, _font, "are belong to ", pos + offset, Color.White);
+
+            offset = _font.MeasureString("All your base are belong to ");
+            offset.Y = 0;
+            DrawOutline(_spriteBatch, _font, "us", pos + offset, Color.ForestGreen);
+
+            offset = _font.MeasureString("All your base are belong to us");
+            offset.Y = 0;
+            DrawOutline(_spriteBatch, _font, ".", pos + offset, Color.White);
+
+            pos.Y += _font.MeasureString("All your base are belong to us.").Y;
+            DrawOutline(_spriteBatch, _font, "All your base are belong to us.", pos, Color.LightGray);
+
+
+//            string text = "All your base are belong\nto us !@#$%^&*()-=_+\n[]{};':\",./<>?";
+
+//            _spriteBatch.DrawString(_font, text, pos + new Vector2(0, -1), Color.Black);
+//            _spriteBatch.DrawString(_font, text, pos + new Vector2(0, 1), Color.Black);
+//            _spriteBatch.DrawString(_font, text, pos + new Vector2(-1, 0), Color.Black);
+//            _spriteBatch.DrawString(_font, text, pos + new Vector2(1, 0), Color.Black);
+//            _spriteBatch.DrawString(_font, text, pos, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
+            /*_spriteBatch.DrawString(
                 _font,
-                "Hello world!",
+//                "All your base are belong\nto us !@#$%^&*()-=_+\n[]{};':\",./<>?",
+                "private void main(int args[]) {\n  return 0;\n}",
                 new Vector2(0, 0),
-                Color.Black /*,
+                Color.Black/*,
                 0,
                 new Vector2(0, 0),
-                1,
+                1,//0.5f,
                 SpriteEffects.None,
-                0*/
-            );
+                0* /
+            );*/
+
             _spriteBatch.End();
 
             base.Draw(gameTime);
         }
-
-        #endregion
     }
 }
