@@ -51,6 +51,7 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\DataTypes\Text\ColoredText.cs" />
     <Compile Include="Api\Extensions\ComparableExtensions.cs" />
     <Compile Include="Api\GameState\GameState.cs" />
     <Compile Include="Api\GameState\StateManager.cs" />

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using DragonRider.Shared.Api.DataTypes.Text;
 using DragonRider.Shared.Api.Extensions;
 using DragonRider.Shared.Api.Helpers.Render;
 using Microsoft.Xna.Framework;
