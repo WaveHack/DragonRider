@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DragonRider.Shared.Api.Extensions;
+using DragonRider.Shared.Api.Helpers.Render;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,6 +19,8 @@ namespace DragonRider.Shared.Game
         private Camera2D _camera;
         private SpriteFont _font;
 
+        private TextRenderer _textRenderer;
+
         public Game()
         {
             _graphics = new GraphicsDeviceManager(this)
@@ -25,6 +28,8 @@ namespace DragonRider.Shared.Game
                 PreferredBackBufferWidth = 1280,
                 PreferredBackBufferHeight = 720
             };
+
+            _textRenderer = new TextRenderer();
 
             Window.AllowUserResizing = true;
 
@@ -42,12 +47,10 @@ namespace DragonRider.Shared.Game
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _textRenderer.SpriteBatch = _spriteBatch;
 
             _font = Content.Load<SpriteFont>("Fonts/FreePixel");
-        }
-
-        protected override void UnloadContent()
-        {
+            _textRenderer.SpriteFont = _font;
         }
 
         protected override void Update(GameTime gameTime)
@@ -104,25 +107,6 @@ namespace DragonRider.Shared.Game
                 samplerState: SamplerState.PointClamp
             );
 
-            void DrawShadowed(SpriteBatch spriteBatch, SpriteFont spriteFont, string text, Vector2 position, Color color, float scale)
-            {
-                // Shadow
-                spriteBatch.DrawString(spriteFont, text, position + new Vector2(1, 1), Color.Gray, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-
-                spriteBatch.DrawString(spriteFont, text, position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-            }
-
-            void DrawOutlined(SpriteBatch spriteBatch, SpriteFont spriteFont, string text, Vector2 position, Color color, float scale)
-            {
-                // Stroke
-                spriteBatch.DrawString(spriteFont, text, position + new Vector2(0, -1), Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-                spriteBatch.DrawString(spriteFont, text, position + new Vector2(0, 1), Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-                spriteBatch.DrawString(spriteFont, text, position + new Vector2(-1, 0), Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-                spriteBatch.DrawString(spriteFont, text, position + new Vector2(1, 0), Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-
-                spriteBatch.DrawString(spriteFont, text, position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-            }
-
             var coloredTexts = new List<ColoredText>();
             coloredTexts.Add(new ColoredText("All your ", Color.White));
             coloredTexts.Add(new ColoredText("base ", Color.Yellow));
@@ -135,7 +119,7 @@ namespace DragonRider.Shared.Game
 
             foreach (var coloredText in coloredTexts)
             {
-                DrawOutlined(_spriteBatch, _font, coloredText.Text, pos + offset, coloredText.Color, 1f);
+                _textRenderer.DrawStroked(coloredText.Text, pos + offset, coloredText.Color);
                 offset.X += _font.MeasureString(coloredText.Text).X;
             }
 
@@ -144,9 +128,9 @@ namespace DragonRider.Shared.Game
             const int textHeight = 24;
 
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            DrawShadowed(_spriteBatch, _font, "Camera: x" + _camera.Position.X.ToString("0.00") + " y" + _camera.Position.Y.ToString("0.00"), Vector2.Zero + new Vector2(0, textHeight * 0), Color.White, 2f);
-            DrawShadowed(_spriteBatch, _font, "Zoom: " + _camera.Zoom.ToString("0.00"), Vector2.Zero + new Vector2(0, textHeight * 1), Color.White, 2f);
-            DrawShadowed(_spriteBatch, _font, "Delta: " + deltaTime.ToString("0.0000"), Vector2.Zero + new Vector2(0, textHeight * 2), Color.White, 2f);
+            _textRenderer.DrawShadowed("Camera: x" + _camera.Position.X.ToString("0.00") + " y" + _camera.Position.Y.ToString("0.00"), Vector2.Zero + new Vector2(0, textHeight * 0), Color.White, 2f);
+            _textRenderer.DrawShadowed("Zoom: " + _camera.Zoom.ToString("0.00"), Vector2.Zero + new Vector2(0, textHeight * 1), Color.White, 2f);
+            _textRenderer.DrawShadowed("Delta: " + deltaTime.ToString("0.0000"), Vector2.Zero + new Vector2(0, textHeight * 2), Color.White, 2f);
             _spriteBatch.End();
 
             base.Draw(gameTime);
