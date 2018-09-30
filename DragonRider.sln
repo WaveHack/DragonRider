@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonRider.Shared", "Drago
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonRider.Tests", "DragonRider.Tests\DragonRider.Tests.csproj", "{C16A17D3-58E2-41D1-A3B1-65968E584F6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonRider.DesktopGL", "DragonRider.DesktopGL\DragonRider.DesktopGL.csproj", "{95C21547-65F1-45B2-8499-425A807882A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{C16A17D3-58E2-41D1-A3B1-65968E584F6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C16A17D3-58E2-41D1-A3B1-65968E584F6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C16A17D3-58E2-41D1-A3B1-65968E584F6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95C21547-65F1-45B2-8499-425A807882A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95C21547-65F1-45B2-8499-425A807882A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95C21547-65F1-45B2-8499-425A807882A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95C21547-65F1-45B2-8499-425A807882A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
