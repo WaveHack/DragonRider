@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 
 namespace DragonRider.Shared.Api.GameState
@@ -57,6 +57,8 @@ namespace DragonRider.Shared.Api.GameState
 
         public void PushState(GameState state, PlayerIndex? index)
         {
+            Debug.WriteLine("StateManager.PushState(state: " + state + ", index: " + index + ")");
+
             drawOrder += drawOrderInc;
             AddState(state, index);
             OnStateChanged();
@@ -64,19 +66,21 @@ namespace DragonRider.Shared.Api.GameState
 
         public void ChangeState(GameState state, PlayerIndex? index)
         {
+            Debug.WriteLine("StateManager.ChangeState(state: " + state + ", index: " + index + ")");
+
             while (gameStates.Count > 0)
                 RemoveState();
 
             drawOrder = startDrawOrder;
             state.DrawOrder = drawOrder;
-            drawOrder += drawOrderInc;
 
-            AddState(state, index);
-            OnStateChanged();
+            PushState(state, index);
         }
 
         public void PopState()
         {
+            Debug.WriteLine("StateManager.PopState()");
+
             if (gameStates.Count == 0)
                 return;
 
@@ -92,11 +96,15 @@ namespace DragonRider.Shared.Api.GameState
 
         protected internal virtual void OnStateChanged()
         {
+            Debug.WriteLine("StateManager.OnStateChanged()");
+
             StateChanged?.Invoke(this, null);
         }
 
         private void AddState(GameState state, PlayerIndex? index)
         {
+            Debug.WriteLine("StateManager.AddState(state: " + state + ", index: " + index + ")");
+
             gameStates.Push(state);
             state.PlayerIndexInControl = index;
             game.Components.Add(state);
@@ -106,6 +114,8 @@ namespace DragonRider.Shared.Api.GameState
         private void RemoveState()
         {
             var state = gameStates.Peek();
+
+            Debug.WriteLine("StateManager.RemoveState(state: " + state + ")");
 
             StateChanged -= state.StateChanged;
             game.Components.Remove(state);
