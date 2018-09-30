@@ -52,7 +52,7 @@ namespace DragonRider.Shared.Game
 
         protected override void Update(GameTime gameTime)
         {
-            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
 
             var keyboardState = Keyboard.GetState();
             const float speed = 4 * PPU;
@@ -103,11 +103,17 @@ namespace DragonRider.Shared.Game
                 transformMatrix: _camera.GetViewMatrix(),
                 samplerState: SamplerState.PointClamp
             );
-            void DrawOutline(SpriteBatch spriteBatch, SpriteFont spriteFont, string text, Vector2 position, Color color, float scale)
+
+            void DrawShadowed(SpriteBatch spriteBatch, SpriteFont spriteFont, string text, Vector2 position, Color color, float scale)
             {
                 // Shadow
-//                spriteBatch.DrawString(spriteFont, text, position + new Vector2(1, 1), Color.Gray, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(spriteFont, text, position + new Vector2(1, 1), Color.Gray, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
 
+                spriteBatch.DrawString(spriteFont, text, position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            }
+
+            void DrawOutlined(SpriteBatch spriteBatch, SpriteFont spriteFont, string text, Vector2 position, Color color, float scale)
+            {
                 // Stroke
                 spriteBatch.DrawString(spriteFont, text, position + new Vector2(0, -1), Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
                 spriteBatch.DrawString(spriteFont, text, position + new Vector2(0, 1), Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
@@ -129,16 +135,18 @@ namespace DragonRider.Shared.Game
 
             foreach (var coloredText in coloredTexts)
             {
-                DrawOutline(_spriteBatch, _font, coloredText.Text, pos + offset, coloredText.Color, 1f);
+                DrawOutlined(_spriteBatch, _font, coloredText.Text, pos + offset, coloredText.Color, 1f);
                 offset.X += _font.MeasureString(coloredText.Text).X;
             }
 
             _spriteBatch.End();
 
+            const int textHeight = 24;
+
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            DrawOutline(_spriteBatch, _font, "Camera: x" + _camera.Position.X.ToString("0.00") + " y" + _camera.Position.Y.ToString("0.00"), Vector2.Zero, Color.White, 2f);
-            DrawOutline(_spriteBatch, _font, "Zoom: " + _camera.Zoom.ToString("0.00"), Vector2.Zero + new Vector2(0, 24), Color.White, 2f);
-            DrawOutline(_spriteBatch, _font, "Delta: " + deltaTime.ToString("0.0000"), Vector2.Zero + new Vector2(0, 48), Color.White, 2f);
+            DrawShadowed(_spriteBatch, _font, "Camera: x" + _camera.Position.X.ToString("0.00") + " y" + _camera.Position.Y.ToString("0.00"), Vector2.Zero + new Vector2(0, textHeight * 0), Color.White, 2f);
+            DrawShadowed(_spriteBatch, _font, "Zoom: " + _camera.Zoom.ToString("0.00"), Vector2.Zero + new Vector2(0, textHeight * 1), Color.White, 2f);
+            DrawShadowed(_spriteBatch, _font, "Delta: " + deltaTime.ToString("0.0000"), Vector2.Zero + new Vector2(0, textHeight * 2), Color.White, 2f);
             _spriteBatch.End();
 
             base.Draw(gameTime);
