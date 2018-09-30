@@ -93,7 +93,7 @@ namespace DragonRider.Shared.Game.GameState
                 new ColoredText(".", Color.White)
             };
 
-            var pos = new Vector2(320, 180) / 2 - _font.MeasureString("All your base are belong to us.") / 2;
+            var pos = ((new Vector2(640, 360) / 2) - (_font.MeasureString("All your base are belong to us.") / 2));
             var offset = Vector2.Zero;
 
             foreach (var coloredText in coloredTexts)

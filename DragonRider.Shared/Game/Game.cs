@@ -49,7 +49,7 @@ namespace DragonRider.Shared.Game
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 320, 180);
+            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 640, 360);
             Camera = new Camera2D(viewportAdapter);
 
             base.Initialize();
