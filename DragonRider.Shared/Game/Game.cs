@@ -80,13 +80,13 @@ namespace DragonRider.Shared.Game
 
         public struct ColoredText
         {
-            public string _text;
-            public Color _color;
+            public readonly string Text;
+            public readonly Color Color;
 
             public ColoredText(string text, Color color)
             {
-                _text = text;
-                _color = color;
+                Text = text;
+                Color = color;
             }
         }
 
@@ -112,20 +112,20 @@ namespace DragonRider.Shared.Game
                 spriteBatch.DrawString(spriteFont, text, position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
             }
 
-            var texts = new List<ColoredText>();
-            texts.Add(new ColoredText("All your ", Color.White));
-            texts.Add(new ColoredText("base ", Color.Yellow));
-            texts.Add(new ColoredText("are belong to ", Color.White));
-            texts.Add(new ColoredText("us", Color.LimeGreen));
-            texts.Add(new ColoredText(".", Color.White));
+            var coloredTexts = new List<ColoredText>();
+            coloredTexts.Add(new ColoredText("All your ", Color.White));
+            coloredTexts.Add(new ColoredText("base ", Color.Yellow));
+            coloredTexts.Add(new ColoredText("are belong to ", Color.White));
+            coloredTexts.Add(new ColoredText("us", Color.LimeGreen));
+            coloredTexts.Add(new ColoredText(".", Color.White));
 
             Vector2 pos = new Vector2(320, 180) / 2 - _font.MeasureString("All your base are belong to us.") / 2;
             Vector2 offset = Vector2.Zero;
 
-            foreach (var coloredText in texts)
+            foreach (var coloredText in coloredTexts)
             {
-                DrawOutline(_spriteBatch, _font, coloredText._text, pos + offset, coloredText._color, 1f);
-                offset.X += _font.MeasureString(coloredText._text).X;
+                DrawOutline(_spriteBatch, _font, coloredText.Text, pos + offset, coloredText.Color, 1f);
+                offset.X += _font.MeasureString(coloredText.Text).X;
             }
 
             _spriteBatch.End();
