@@ -27,8 +27,8 @@ namespace DragonRider.Shared.Game
         {
             Graphics = new GraphicsDeviceManager(this)
             {
-                PreferredBackBufferWidth = 1280,
-                PreferredBackBufferHeight = 720
+                PreferredBackBufferWidth = Constants.WINDOW_WIDTH,
+                PreferredBackBufferHeight = Constants.WINDOW_HEIGHT
             };
 
             Window.AllowUserResizing = true;
@@ -49,7 +49,7 @@ namespace DragonRider.Shared.Game
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 640, 360);
+            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
             Camera = new Camera2D(viewportAdapter);
 
             base.Initialize();
