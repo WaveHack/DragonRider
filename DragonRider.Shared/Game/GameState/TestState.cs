@@ -6,6 +6,8 @@ using DragonRider.Shared.Api.Helpers.Render;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Tiled;
+using MonoGame.Extended.Tiled.Graphics;
 
 namespace DragonRider.Shared.Game.GameState
 {
@@ -20,7 +22,8 @@ namespace DragonRider.Shared.Game.GameState
         private SpriteFont _font;
         private readonly TextRenderer _textRenderer;
 
-
+        private TiledMap _map;
+        private TiledMapRenderer _mapRenderer;
 
         #endregion
 
@@ -48,6 +51,9 @@ namespace DragonRider.Shared.Game.GameState
 
             _font = content.Load<SpriteFont>("Fonts/FreePixel");
             _textRenderer.SpriteFont = _font;
+
+            _map = content.Load<TiledMap>("Maps/Test");
+            _mapRenderer = new TiledMapRenderer(GameRef.GraphicsDevice);
         }
 
         public override void Update(GameTime gameTime)
@@ -72,6 +78,8 @@ namespace DragonRider.Shared.Game.GameState
             else if (keyboardState.IsKeyDown(Keys.D0))
                 GameRef.Camera.Zoom = 1;
 
+            _mapRenderer.Update(_map, gameTime);
+
             float mapWidthInTiles = 40;
             float mapHeightInTiles = 22.5f;
 
@@ -90,10 +98,14 @@ namespace DragonRider.Shared.Game.GameState
 
         public override void Draw(GameTime gameTime)
         {
+            Matrix viewMatrix = GameRef.Camera.GetViewMatrix();
+
             GameRef.SpriteBatch.Begin(
-                transformMatrix: GameRef.Camera.GetViewMatrix(),
+                transformMatrix: viewMatrix,
                 samplerState: SamplerState.PointClamp
             );
+
+            _mapRenderer.Draw(_map, viewMatrix);
 
             var coloredTexts = new List<ColoredText>
             {

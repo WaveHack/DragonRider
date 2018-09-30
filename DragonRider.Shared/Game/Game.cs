@@ -71,7 +71,7 @@ namespace DragonRider.Shared.Game
 
         protected override void Draw(GameTime gameTime)
         {
-            Graphics.GraphicsDevice.Clear(Color.DarkGray);
+            Graphics.GraphicsDevice.Clear(new Color(41, 41, 41));
 
             base.Draw(gameTime);
         }
