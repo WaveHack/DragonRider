@@ -75,13 +75,13 @@ namespace DragonRider.Shared.Game
 
         public struct ColoredText
         {
-            public string text;
-            public Color color;
+            public string _text;
+            public Color _color;
 
-            public ColoredText(string _text, Color _color)
+            public ColoredText(string text, Color color)
             {
-                text = _text;
-                color = _color;
+                _text = text;
+                _color = color;
             }
         }
 
