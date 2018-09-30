@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
@@ -61,7 +62,24 @@ namespace DragonRider.Shared.Game
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+                _camera.Move(new Vector2(1, 0));
+            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
+                _camera.Move(new Vector2(-1, 0));
+
             base.Update(gameTime);
+        }
+
+        public struct ColoredText
+        {
+            public string text;
+            public Color color;
+
+            public ColoredText(string _text, Color _color)
+            {
+                text = _text;
+                color = _color;
+            }
         }
 
         protected override void Draw(GameTime gameTime)
@@ -87,29 +105,48 @@ namespace DragonRider.Shared.Game
                 spriteBatch.DrawString(spriteFont, text, position, color);
             }
 
-            Vector2 pos = new Vector2(320, 180) / 2
-                          - _font.MeasureString("All your base are belong to us.\nAll your base are belong to us.") / 2;
+            var texts = new List<ColoredText>();
+            texts.Add(new ColoredText("All your ", Color.White));
+            texts.Add(new ColoredText("base ", Color.Yellow));
+            texts.Add(new ColoredText("are belong to ", Color.White));
+            texts.Add(new ColoredText("us", Color.LimeGreen));
+            texts.Add(new ColoredText(".", Color.White));
 
-            DrawOutline(_spriteBatch, _font, "All your ", pos, Color.White);
+            Vector2 pos = new Vector2(320, 180) / 2 - _font.MeasureString("All your base are belong to us.") / 2;
+            Vector2 offset = Vector2.Zero;
 
-            Vector2 offset = _font.MeasureString("All your ");
-            offset.Y = 0;
-            DrawOutline(_spriteBatch, _font, "base", pos + offset, Color.Yellow);
+            foreach (var coloredText in texts)
+            {
+                DrawOutline(_spriteBatch, _font, coloredText.text, pos + offset, coloredText.color);
+                offset += _font.MeasureString(coloredText.text);
+                offset.Y = 0;
+            }
 
-            offset = _font.MeasureString("All your base ");
-            offset.Y = 0;
-            DrawOutline(_spriteBatch, _font, "are belong to ", pos + offset, Color.White);
 
-            offset = _font.MeasureString("All your base are belong to ");
-            offset.Y = 0;
-            DrawOutline(_spriteBatch, _font, "us", pos + offset, Color.LimeGreen);
-
-            offset = _font.MeasureString("All your base are belong to us");
-            offset.Y = 0;
-            DrawOutline(_spriteBatch, _font, ".", pos + offset, Color.White);
-
-            pos.Y += _font.MeasureString("All your base are belong to us.").Y;
-            DrawOutline(_spriteBatch, _font, "All your base are belong to us.", pos, Color.LightGray);
+//
+//            Vector2 pos = new Vector2(320, 180) / 2
+//                          - _font.MeasureString("All your base are belong to us.\nAll your base are belong to us.") / 2;
+//
+//            DrawOutline(_spriteBatch, _font, "All your ", pos, Color.White);
+//
+//            Vector2 offset = _font.MeasureString("All your ");
+//            offset.Y = 0;
+//            DrawOutline(_spriteBatch, _font, "base", pos + offset, Color.Yellow);
+//
+//            offset = _font.MeasureString("All your base ");
+//            offset.Y = 0;
+//            DrawOutline(_spriteBatch, _font, "are belong to ", pos + offset, Color.White);
+//
+//            offset = _font.MeasureString("All your base are belong to ");
+//            offset.Y = 0;
+//            DrawOutline(_spriteBatch, _font, "us", pos + offset, Color.LimeGreen);
+//
+//            offset = _font.MeasureString("All your base are belong to us");
+//            offset.Y = 0;
+//            DrawOutline(_spriteBatch, _font, ".", pos + offset, Color.White);
+//
+//            pos.Y += _font.MeasureString("All your base are belong to us.").Y;
+//            DrawOutline(_spriteBatch, _font, "All your base are belong to us.", pos, Color.LightGray);
 
 
 //            string text = "All your base are belong\nto us !@#$%^&*()-=_+\n[]{};':\",./<>?";
@@ -133,6 +170,10 @@ namespace DragonRider.Shared.Game
                 0* /
             );*/
 
+            _spriteBatch.End();
+
+            _spriteBatch.Begin();
+            DrawOutline(_spriteBatch, _font, "test", Vector2.Zero, Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);
