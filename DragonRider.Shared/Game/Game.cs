@@ -102,7 +102,7 @@ namespace DragonRider.Shared.Game
 
             offset = _font.MeasureString("All your base are belong to ");
             offset.Y = 0;
-            DrawOutline(_spriteBatch, _font, "us", pos + offset, Color.ForestGreen);
+            DrawOutline(_spriteBatch, _font, "us", pos + offset, Color.LimeGreen);
 
             offset = _font.MeasureString("All your base are belong to us");
             offset.Y = 0;
