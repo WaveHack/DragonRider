@@ -10,6 +10,9 @@ namespace DragonRider.Shared.Game
 {
     public class Game : Microsoft.Xna.Framework.Game
     {
+        private const int PPU = 16;
+        private float deltaTime;
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Camera2D _camera;
@@ -49,31 +52,33 @@ namespace DragonRider.Shared.Game
 
         protected override void Update(GameTime gameTime)
         {
+            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             var keyboardState = Keyboard.GetState();
-            const float speed = 2f;
+            const float speed = 4 * PPU;
 
             if (keyboardState.IsKeyDown(Keys.Escape))
                 Exit();
 
             if (keyboardState.IsKeyDown(Keys.Up))
-                _camera.Move(new Vector2(0, -speed));
+                _camera.Move(new Vector2(0, -speed * deltaTime));
             else if (keyboardState.IsKeyDown(Keys.Down))
-                _camera.Move(new Vector2(0, speed));
+                _camera.Move(new Vector2(0, speed * deltaTime));
 
             if (keyboardState.IsKeyDown(Keys.Left))
-                _camera.Move(new Vector2(-speed, 0));
+                _camera.Move(new Vector2(-speed * deltaTime, 0));
             else if (keyboardState.IsKeyDown(Keys.Right))
-                _camera.Move(new Vector2(speed, 0));
+                _camera.Move(new Vector2(speed * deltaTime, 0));
 
             if (keyboardState.IsKeyDown(Keys.OemMinus))
-                _camera.Zoom /= 1.025f;
+                _camera.Zoom /= 1 + .5f * deltaTime;
             else if (keyboardState.IsKeyDown(Keys.OemPlus))
-                _camera.Zoom *= 1.025f;
+                _camera.Zoom *= 1 + .5f * deltaTime;
             else if (keyboardState.IsKeyDown(Keys.D0))
                 _camera.Zoom = 1;
 
-            _camera.Position = Vector2.Clamp(_camera.Position, new Vector2(0, 0), new Vector2(10, 20));
-            _camera.Zoom = _camera.Zoom.Clamp(.1f, 2f);
+            _camera.Position = Vector2.Clamp(_camera.Position, new Vector2(0, 0), new Vector2(20 * PPU, 15 * PPU));
+            _camera.Zoom = _camera.Zoom.Clamp(.5f, 2f);
 
             base.Update(gameTime);
         }
@@ -131,8 +136,9 @@ namespace DragonRider.Shared.Game
             _spriteBatch.End();
 
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            DrawOutline(_spriteBatch, _font, "Camera: " + _camera.Position.X + "/" + _camera.Position.Y, Vector2.Zero, Color.White, 2f);
+            DrawOutline(_spriteBatch, _font, "Camera: x" + _camera.Position.X.ToString("0.00") + " y" + _camera.Position.Y.ToString("0.00"), Vector2.Zero, Color.White, 2f);
             DrawOutline(_spriteBatch, _font, "Zoom: " + _camera.Zoom.ToString("0.00"), Vector2.Zero + new Vector2(0, 24), Color.White, 2f);
+            DrawOutline(_spriteBatch, _font, "Delta: " + deltaTime.ToString("0.0000"), Vector2.Zero + new Vector2(0, 48), Color.White, 2f);
             _spriteBatch.End();
 
             base.Draw(gameTime);
