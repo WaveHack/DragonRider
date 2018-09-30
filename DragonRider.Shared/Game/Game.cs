@@ -65,10 +65,19 @@ namespace DragonRider.Shared.Game
             else if (keyboardState.IsKeyDown(Keys.Right))
                 _camera.Move(new Vector2(speed, 0));
 
+            if (keyboardState.IsKeyDown(Keys.OemMinus))
+                _camera.Zoom /= 1.025f;
+            else if (keyboardState.IsKeyDown(Keys.OemPlus))
+                _camera.Zoom *= 1.025f;
+            else if (keyboardState.IsKeyDown(Keys.D0))
+                _camera.Zoom = 1;
+
             _camera.Position = new Vector2(
                 _camera.Position.X.Clamp(0, 100),
                 _camera.Position.Y.Clamp(0, 100)
             );
+
+            _camera.Zoom = _camera.Zoom.Clamp(.1f, 2f);
 
             base.Update(gameTime);
         }
@@ -93,19 +102,18 @@ namespace DragonRider.Shared.Game
                 transformMatrix: _camera.GetViewMatrix(),
                 samplerState: SamplerState.PointClamp
             );
-
-            void DrawOutline(SpriteBatch spriteBatch, SpriteFont spriteFont, string text, Vector2 position, Color color)
+            void DrawOutline(SpriteBatch spriteBatch, SpriteFont spriteFont, string text, Vector2 position, Color color, float scale)
             {
                 // Shadow
-//                spriteBatch.DrawString(spriteFont, text, position + new Vector2(1, 1), Color.Gray);
+//                spriteBatch.DrawString(spriteFont, text, position + new Vector2(1, 1), Color.Gray, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
 
                 // Stroke
-                spriteBatch.DrawString(spriteFont, text, position + new Vector2(0, -1), Color.Black);
-                spriteBatch.DrawString(spriteFont, text, position + new Vector2(0, 1), Color.Black);
-                spriteBatch.DrawString(spriteFont, text, position + new Vector2(-1, 0), Color.Black);
-                spriteBatch.DrawString(spriteFont, text, position + new Vector2(1, 0), Color.Black);
+                spriteBatch.DrawString(spriteFont, text, position + new Vector2(0, -1), Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(spriteFont, text, position + new Vector2(0, 1), Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(spriteFont, text, position + new Vector2(-1, 0), Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(spriteFont, text, position + new Vector2(1, 0), Color.Black, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
 
-                spriteBatch.DrawString(spriteFont, text, position, color);
+                spriteBatch.DrawString(spriteFont, text, position, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
             }
 
             var texts = new List<ColoredText>();
@@ -120,63 +128,15 @@ namespace DragonRider.Shared.Game
 
             foreach (var coloredText in texts)
             {
-                DrawOutline(_spriteBatch, _font, coloredText.text, pos + offset, coloredText.color);
-                offset += _font.MeasureString(coloredText.text);
-                offset.Y = 0;
+                DrawOutline(_spriteBatch, _font, coloredText._text, pos + offset, coloredText._color, 1f);
+                offset.X += _font.MeasureString(coloredText._text).X;
             }
-
-
-//
-//            Vector2 pos = new Vector2(320, 180) / 2
-//                          - _font.MeasureString("All your base are belong to us.\nAll your base are belong to us.") / 2;
-//
-//            DrawOutline(_spriteBatch, _font, "All your ", pos, Color.White);
-//
-//            Vector2 offset = _font.MeasureString("All your ");
-//            offset.Y = 0;
-//            DrawOutline(_spriteBatch, _font, "base", pos + offset, Color.Yellow);
-//
-//            offset = _font.MeasureString("All your base ");
-//            offset.Y = 0;
-//            DrawOutline(_spriteBatch, _font, "are belong to ", pos + offset, Color.White);
-//
-//            offset = _font.MeasureString("All your base are belong to ");
-//            offset.Y = 0;
-//            DrawOutline(_spriteBatch, _font, "us", pos + offset, Color.LimeGreen);
-//
-//            offset = _font.MeasureString("All your base are belong to us");
-//            offset.Y = 0;
-//            DrawOutline(_spriteBatch, _font, ".", pos + offset, Color.White);
-//
-//            pos.Y += _font.MeasureString("All your base are belong to us.").Y;
-//            DrawOutline(_spriteBatch, _font, "All your base are belong to us.", pos, Color.LightGray);
-
-
-//            string text = "All your base are belong\nto us !@#$%^&*()-=_+\n[]{};':\",./<>?";
-
-//            _spriteBatch.DrawString(_font, text, pos + new Vector2(0, -1), Color.Black);
-//            _spriteBatch.DrawString(_font, text, pos + new Vector2(0, 1), Color.Black);
-//            _spriteBatch.DrawString(_font, text, pos + new Vector2(-1, 0), Color.Black);
-//            _spriteBatch.DrawString(_font, text, pos + new Vector2(1, 0), Color.Black);
-//            _spriteBatch.DrawString(_font, text, pos, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-
-            /*_spriteBatch.DrawString(
-                _font,
-//                "All your base are belong\nto us !@#$%^&*()-=_+\n[]{};':\",./<>?",
-                "private void main(int args[]) {\n  return 0;\n}",
-                new Vector2(0, 0),
-                Color.Black/*,
-                0,
-                new Vector2(0, 0),
-                1,//0.5f,
-                SpriteEffects.None,
-                0* /
-            );*/
 
             _spriteBatch.End();
 
-            _spriteBatch.Begin();
-            DrawOutline(_spriteBatch, _font, "Camera: " + _camera.Position.X + "/" + _camera.Position.Y, Vector2.Zero, Color.White);
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            DrawOutline(_spriteBatch, _font, "Camera: " + _camera.Position.X + "/" + _camera.Position.Y, Vector2.Zero, Color.White, 2f);
+            DrawOutline(_spriteBatch, _font, "Zoom: " + _camera.Zoom.ToString("0.00"), Vector2.Zero + new Vector2(0, 24), Color.White, 2f);
             _spriteBatch.End();
 
             base.Draw(gameTime);
