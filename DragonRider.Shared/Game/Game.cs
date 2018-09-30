@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using DragonRider.Shared.Api.DataTypes.Text;
 using DragonRider.Shared.Api.Extensions;
 using DragonRider.Shared.Api.Helpers.Render;
@@ -12,7 +12,6 @@ namespace DragonRider.Shared.Game
 {
     public class Game : Microsoft.Xna.Framework.Game
     {
-        private const int PPU = 16;
         private float deltaTime;
 
         private GraphicsDeviceManager _graphics;
@@ -59,7 +58,7 @@ namespace DragonRider.Shared.Game
             deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
 
             var keyboardState = Keyboard.GetState();
-            const float speed = 4 * PPU;
+            const float speed = 4 * Constants.PPU;
 
             if (keyboardState.IsKeyDown(Keys.Escape))
                 Exit();
@@ -81,7 +80,7 @@ namespace DragonRider.Shared.Game
             else if (keyboardState.IsKeyDown(Keys.D0))
                 _camera.Zoom = 1;
 
-            _camera.Position = Vector2.Clamp(_camera.Position, new Vector2(0, 0), new Vector2(20 * PPU, 15 * PPU));
+            _camera.Position = Vector2.Clamp(_camera.Position, new Vector2(0, 0), new Vector2(20 * Constants.PPU, 15 * Constants.PPU));
             _camera.Zoom = _camera.Zoom.Clamp(.5f, 2f);
 
             base.Update(gameTime);
