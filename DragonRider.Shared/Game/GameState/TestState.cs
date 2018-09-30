@@ -7,7 +7,7 @@ namespace DragonRider.Shared.Game.GameState
     {
     }
 
-    public class TestState : Api.GameState.GameState, ITestState
+    public class TestState : GameState, ITestState
     {
         #region Fields
 
@@ -19,7 +19,6 @@ namespace DragonRider.Shared.Game.GameState
 
         public TestState(Microsoft.Xna.Framework.Game game) : base(game)
         {
-            game.Services.AddService(typeof(ITestState), this);
         }
 
         #endregion
