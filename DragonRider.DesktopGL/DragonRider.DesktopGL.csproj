@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=3.7.0.1708, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.7.0.1708\lib\net45\MonoGame.Framework.dll</HintPath>
@@ -39,6 +42,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icon.ico" />
+    <EmbeddedResource Include="Icon.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
