@@ -20,6 +20,8 @@ namespace DragonRider.Shared.Game.GameState
         private SpriteFont _font;
         private readonly TextRenderer _textRenderer;
 
+
+
         #endregion
 
         #region Constructors

@@ -14,17 +14,15 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Font.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Font.spritefont
-
 #begin Fonts/FreePixel.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/FreePixel.spritefont
+
+#begin Maps/Test.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/Test.tmx
 
