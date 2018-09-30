@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DragonRider.Shared.Api.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -29,18 +30,7 @@ namespace DragonRider.Shared.Game
 
         protected override void Initialize()
         {
-            var viewportAdapter = new BoxingViewportAdapter(
-                Window,
-//#if WINDOWS
-                _graphics,
-//#else
-//                GraphicsDevice,
-//#endif
-                320,
-                180
-//                1348, 900,
-//                148, 140
-            );
+            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 320, 180);
             _camera = new Camera2D(viewportAdapter);
 
             base.Initialize();
@@ -59,13 +49,26 @@ namespace DragonRider.Shared.Game
 
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            var keyboardState = Keyboard.GetState();
+            const float speed = 2f;
+
+            if (keyboardState.IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-                _camera.Move(new Vector2(1, 0));
-            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
-                _camera.Move(new Vector2(-1, 0));
+            if (keyboardState.IsKeyDown(Keys.Up))
+                _camera.Move(new Vector2(0, -speed));
+            else if (keyboardState.IsKeyDown(Keys.Down))
+                _camera.Move(new Vector2(0, speed));
+
+            if (keyboardState.IsKeyDown(Keys.Left))
+                _camera.Move(new Vector2(-speed, 0));
+            else if (keyboardState.IsKeyDown(Keys.Right))
+                _camera.Move(new Vector2(speed, 0));
+
+            _camera.Position = new Vector2(
+                _camera.Position.X.Clamp(0, 100),
+                _camera.Position.Y.Clamp(0, 100)
+            );
 
             base.Update(gameTime);
         }
@@ -84,7 +87,7 @@ namespace DragonRider.Shared.Game
 
         protected override void Draw(GameTime gameTime)
         {
-            _graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            _graphics.GraphicsDevice.Clear(Color.DarkGray);
 
             _spriteBatch.Begin(
                 transformMatrix: _camera.GetViewMatrix(),
