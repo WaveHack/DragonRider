@@ -173,7 +173,7 @@ namespace DragonRider.Shared.Game
             _spriteBatch.End();
 
             _spriteBatch.Begin();
-            DrawOutline(_spriteBatch, _font, "test", Vector2.Zero, Color.White);
+            DrawOutline(_spriteBatch, _font, "Camera: " + _camera.Position.X + "/" + _camera.Position.Y, Vector2.Zero, Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);
