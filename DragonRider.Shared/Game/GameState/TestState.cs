@@ -21,7 +21,6 @@ namespace DragonRider.Shared.Game.GameState
 
         private SpriteFont _font;
         private readonly TextRenderer _textRenderer;
-
         private TiledMap _map;
         private TiledMapRenderer _mapRenderer;
 
