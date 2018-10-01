@@ -64,6 +64,7 @@
     <Compile Include="Api\GameState\GameState.cs" />
     <Compile Include="Api\GameState\StateManager.cs" />
     <Compile Include="Api\Helpers\Render\TextRenderer.cs" />
+    <Compile Include="Game\Component\Player.cs" />
     <Compile Include="Game\Constants.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Game\GameState\GameState.cs" />

@@ -3,6 +3,7 @@ using DragonRider.Shared.Api.DataTypes.Text;
 using DragonRider.Shared.Api.Extensions;
 using DragonRider.Shared.Api.GameState;
 using DragonRider.Shared.Api.Helpers.Render;
+using DragonRider.Shared.Game.Component;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -24,13 +25,18 @@ namespace DragonRider.Shared.Game.GameState
         private TiledMap _map;
         private TiledMapRenderer _mapRenderer;
 
+        private Player _player;
+
         #endregion
 
         #region Constructors
 
-        public TestState(Microsoft.Xna.Framework.Game game) : base(game)
+        public TestState(Game game) : base(game)
         {
             _textRenderer = new TextRenderer();
+
+            _player = new Player(game, new Vector2(33 * 16, 15 * 16), new Vector2(16, 24));
+            Components.Add(_player);
         }
 
         #endregion
@@ -39,6 +45,8 @@ namespace DragonRider.Shared.Game.GameState
 
         public override void Initialize()
         {
+            _player.Initialize(GameRef.SpriteBatch);
+
             base.Initialize();
         }
 
@@ -108,7 +116,12 @@ namespace DragonRider.Shared.Game.GameState
                 samplerState: SamplerState.PointClamp
             );
 
-            _mapRenderer.Draw(_map, viewMatrix);
+            _mapRenderer.Draw(_map.GetLayer("Background"), viewMatrix);
+            _mapRenderer.Draw(_map.GetLayer("Wall"), viewMatrix);
+
+            base.Draw(gameTime);
+
+            _mapRenderer.Draw(_map.GetLayer("Foreground"), viewMatrix);
 
             var coloredTexts = new List<ColoredText>
             {
@@ -142,8 +155,6 @@ namespace DragonRider.Shared.Game.GameState
             _textRenderer.DrawShadowed("Delta: " + GameRef.Delta.ToString("0.0000"),
                 Vector2.Zero + new Vector2(0, textHeight * 2), Color.White, 2f);
             GameRef.SpriteBatch.End();
-
-            base.Draw(gameTime);
         }
 
         #endregion

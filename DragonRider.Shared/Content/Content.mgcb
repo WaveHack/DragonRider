@@ -21,6 +21,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/FreePixel.spritefont
 
+#begin Graphics/Sprites/Player.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Graphics/Sprites/Player.png
+
 #begin Graphics/Tilesets/parallaxBG-interior1.png
 /importer:TextureImporter
 /processor:TextureProcessor
