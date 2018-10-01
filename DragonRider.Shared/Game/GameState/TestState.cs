@@ -78,7 +78,7 @@ namespace DragonRider.Shared.Game.GameState
             else if (keyboardState.IsKeyDown(Keys.D0))
                 GameRef.Camera.Zoom = 1;
 
-            _mapRenderer.Update(_map, gameTime);
+            GameRef.Camera.Zoom = GameRef.Camera.Zoom.Clamp(1f, 2f);
 
             float mapWidthInTiles = 40;
             float mapHeightInTiles = 22.5f;
@@ -94,7 +94,8 @@ namespace DragonRider.Shared.Game.GameState
                     ((mapHeightInTiles * Constants.PPU) - Constants.VIEWPORT_HEIGHT) + (_map.HeightInPixels - _map.HeightInPixels * (1 / GameRef.Camera.Zoom)) / 2
                 )
             );
-            GameRef.Camera.Zoom = GameRef.Camera.Zoom.Clamp(1f, 2f);
+
+            _mapRenderer.Update(_map, gameTime);
 
             base.Update(gameTime);
         }
