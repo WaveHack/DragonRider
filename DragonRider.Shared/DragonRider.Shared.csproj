@@ -36,8 +36,20 @@
       <HintPath>..\packages\MonoGame.Extended.1.1.0\lib\portable-net45+win8+wpa81\MonoGame.Extended.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MonoGame.Extended.Animations, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\MonoGame.Extended.Animations.1.1.0\lib\portable-net45+win8+wpa81\MonoGame.Extended.Animations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MonoGame.Extended.Entities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\MonoGame.Extended.Entities.1.1.0\lib\portable-net45+win8+wpa81\MonoGame.Extended.Entities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MonoGame.Extended.Graphics, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\MonoGame.Extended.Graphics.1.1.0\lib\portable-net45+win8+wpa81\MonoGame.Extended.Graphics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MonoGame.Extended.Particles, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\MonoGame.Extended.Particles.1.1.0\lib\portable-net45+win8+wpa81\MonoGame.Extended.Particles.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MonoGame.Extended.Tiled, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
