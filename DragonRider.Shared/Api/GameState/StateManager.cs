@@ -7,9 +7,9 @@ namespace DragonRider.Shared.Api.GameState
 {
     public interface IStateManager
     {
-        GameState CurrentState { get; }
-
         event EventHandler StateChanged;
+
+        GameState CurrentState { get; }
 
         void PushState(GameState state, PlayerIndex? index);
         void ChangeState(GameState state, PlayerIndex? index);
@@ -19,27 +19,23 @@ namespace DragonRider.Shared.Api.GameState
 
     public class StateManager : GameComponent, IStateManager
     {
-        #region Fields
+        #region Constants
 
-        protected Microsoft.Xna.Framework.Game game;
-
-        private readonly Stack<GameState> gameStates = new Stack<GameState>();
-
-        private const int startDrawOrder = 5000;
-        private const int drawOrderInc = 50;
-        private int drawOrder;
+        private const int DrawOrderStart = 5000;
+        private const int DrawOrderIncrement = 50;
 
         #endregion
 
-        #region Event Handlers
+        #region Fields
 
-        public event EventHandler StateChanged;
+        private readonly Stack<GameState> _gameStates = new Stack<GameState>();
+        private int _drawOrder;
 
         #endregion
 
         #region Properties
 
-        public GameState CurrentState => gameStates.Peek();
+        public GameState CurrentState => _gameStates.Peek();
 
         #endregion
 
@@ -47,9 +43,14 @@ namespace DragonRider.Shared.Api.GameState
 
         public StateManager(Microsoft.Xna.Framework.Game game) : base(game)
         {
-            this.game = game;
-            this.game.Services.AddService(typeof(IStateManager), this);
+            Game.Services.AddService(typeof(IStateManager), this);
         }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler StateChanged;
 
         #endregion
 
@@ -59,7 +60,7 @@ namespace DragonRider.Shared.Api.GameState
         {
             Debug.WriteLine("StateManager.PushState(state: " + state + ", index: " + index + ")");
 
-            drawOrder += drawOrderInc;
+            _drawOrder += DrawOrderIncrement;
             AddState(state, index);
             OnStateChanged();
         }
@@ -68,11 +69,11 @@ namespace DragonRider.Shared.Api.GameState
         {
             Debug.WriteLine("StateManager.ChangeState(state: " + state + ", index: " + index + ")");
 
-            while (gameStates.Count > 0)
+            while (_gameStates.Count > 0)
                 RemoveState();
 
-            drawOrder = startDrawOrder;
-            state.DrawOrder = drawOrder;
+            _drawOrder = DrawOrderStart;
+            state.DrawOrder = _drawOrder;
 
             PushState(state, index);
         }
@@ -81,17 +82,17 @@ namespace DragonRider.Shared.Api.GameState
         {
             Debug.WriteLine("StateManager.PopState()");
 
-            if (gameStates.Count == 0)
+            if (_gameStates.Count == 0)
                 return;
 
             RemoveState();
-            drawOrder -= drawOrderInc;
+            _drawOrder -= DrawOrderIncrement;
             OnStateChanged();
         }
 
         public bool ContainsState(GameState state)
         {
-            return gameStates.Contains(state);
+            return _gameStates.Contains(state);
         }
 
         protected internal virtual void OnStateChanged()
@@ -105,21 +106,21 @@ namespace DragonRider.Shared.Api.GameState
         {
             Debug.WriteLine("StateManager.AddState(state: " + state + ", index: " + index + ")");
 
-            gameStates.Push(state);
+            _gameStates.Push(state);
             state.PlayerIndexInControl = index;
-            game.Components.Add(state);
+            Game.Components.Add(state);
             StateChanged += state.StateChanged;
         }
 
         private void RemoveState()
         {
-            var state = gameStates.Peek();
+            var state = _gameStates.Peek();
 
             Debug.WriteLine("StateManager.RemoveState(state: " + state + ")");
 
             StateChanged -= state.StateChanged;
-            game.Components.Remove(state);
-            gameStates.Pop();
+            Game.Components.Remove(state);
+            _gameStates.Pop();
         }
 
         #endregion
