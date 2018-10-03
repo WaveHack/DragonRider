@@ -18,10 +18,10 @@ namespace DragonRider.Shared.Game.GameState
 
         private SpriteFont _font;
         private readonly TextRenderer _textRenderer;
-        private TiledMap _map;
-        private TiledMapRenderer _mapRenderer;
+//        private TiledMap _map;
+//        private TiledMapRenderer _mapRenderer;
 
-        private Player _player;
+//        private Player _player;
 
         #endregion
 
@@ -31,8 +31,8 @@ namespace DragonRider.Shared.Game.GameState
         {
             _textRenderer = new TextRenderer();
 
-            _player = new Player(game, new Vector2(33 * 16, 15 * 16), new Vector2(16, 24));
-            Components.Add(_player);
+//            _player = new Player(game, new Vector2(33 * 16, 15 * 16), new Vector2(16, 24));
+//            Components.Add(_player);
         }
 
         #endregion
@@ -41,7 +41,7 @@ namespace DragonRider.Shared.Game.GameState
 
         public override void Initialize()
         {
-            _player.Initialize(Game.SpriteBatch);
+//            _player.Initialize(Game.SpriteBatch);
 
             base.Initialize();
         }
@@ -55,8 +55,8 @@ namespace DragonRider.Shared.Game.GameState
             _font = Content.Load<SpriteFont>("Fonts/FreePixel");
             _textRenderer.SpriteFont = _font;
 
-            _map = Content.Load<TiledMap>("Maps/Test");
-            _mapRenderer = new TiledMapRenderer(Game.GraphicsDevice);
+//            _map = Content.Load<TiledMap>("Maps/Test");
+//            _mapRenderer = new TiledMapRenderer(Game.GraphicsDevice);
         }
 
         public override void Update(GameTime gameTime)
@@ -83,26 +83,22 @@ namespace DragonRider.Shared.Game.GameState
 
             Game.Camera.Zoom = Game.Camera.Zoom.Clamp(1f, 2f);
 
-            float mapWidthInTiles = 40;
-            float mapHeightInTiles = 22.5f;
+//            float mapWidthInTiles = 40;
+//            float mapHeightInTiles = 22.5f;
 
-            Debug.WriteLine("Game: " + Game);
-            Debug.WriteLine("Came Camera: " + Game.Camera);
-            Debug.WriteLine("Came Camera Position: " + Game.Camera.Position);
+//            Game.Camera.Position = Vector2.Clamp(
+//                Game.Camera.Position,
+//                new Vector2(
+//                    -(_map.WidthInPixels - _map.WidthInPixels * (1 / Game.Camera.Zoom)) / 2,
+//                    -(_map.HeightInPixels - _map.HeightInPixels * (1 / Game.Camera.Zoom)) / 2
+//                ),
+//                new Vector2(
+//                    ((mapWidthInTiles * Constants.Ppu) - Constants.ViewportWidth) + (_map.WidthInPixels - _map.WidthInPixels * (1 / Game.Camera.Zoom)) / 2,
+//                    ((mapHeightInTiles * Constants.Ppu) - Constants.ViewportHeight) + (_map.HeightInPixels - _map.HeightInPixels * (1 / Game.Camera.Zoom)) / 2
+//                )
+//            );
 
-            Game.Camera.Position = Vector2.Clamp(
-                Game.Camera.Position,
-                new Vector2(
-                    -(_map.WidthInPixels - _map.WidthInPixels * (1 / Game.Camera.Zoom)) / 2,
-                    -(_map.HeightInPixels - _map.HeightInPixels * (1 / Game.Camera.Zoom)) / 2
-                ),
-                new Vector2(
-                    ((mapWidthInTiles * Constants.Ppu) - Constants.ViewportWidth) + (_map.WidthInPixels - _map.WidthInPixels * (1 / Game.Camera.Zoom)) / 2,
-                    ((mapHeightInTiles * Constants.Ppu) - Constants.ViewportHeight) + (_map.HeightInPixels - _map.HeightInPixels * (1 / Game.Camera.Zoom)) / 2
-                )
-            );
-
-            _mapRenderer.Update(_map, gameTime);
+//            _mapRenderer.Update(_map, gameTime);
 
             base.Update(gameTime);
         }
@@ -116,12 +112,12 @@ namespace DragonRider.Shared.Game.GameState
                 samplerState: SamplerState.PointClamp
             );
 
-            _mapRenderer.Draw(_map.GetLayer("Background"), viewMatrix);
-            _mapRenderer.Draw(_map.GetLayer("Wall"), viewMatrix);
+//            _mapRenderer.Draw(_map.GetLayer("Background"), viewMatrix);
+//            _mapRenderer.Draw(_map.GetLayer("Wall"), viewMatrix);
 
             base.Draw(gameTime);
 
-            _mapRenderer.Draw(_map.GetLayer("Foreground"), viewMatrix);
+//            _mapRenderer.Draw(_map.GetLayer("Foreground"), viewMatrix);
 
             var coloredTexts = new List<ColoredText>
             {
