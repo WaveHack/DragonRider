@@ -109,7 +109,7 @@ namespace DragonRider.Shared.Game.GameState
 
         public override void Draw(GameTime gameTime)
         {
-            Matrix viewMatrix = Game.Camera.GetViewMatrix();
+            var viewMatrix = Game.Camera.GetViewMatrix();
 
             SpriteBatch.Begin(
                 transformMatrix: viewMatrix,
