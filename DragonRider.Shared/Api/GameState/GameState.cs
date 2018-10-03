@@ -13,29 +13,15 @@ namespace DragonRider.Shared.Api.GameState
 
     public abstract partial class GameState : DrawableGameComponent, IGameState
     {
-        #region Fields
-
-        protected readonly IStateManager manager;
-        protected ContentManager content;
-
-        protected GameState tag;
-        protected PlayerIndex? indexInControl;
-
-        protected readonly List<GameComponent> components;
-
-        #endregion
-
         #region Properties
 
-        public GameState Tag => tag;
+        public GameState Tag { get; }
+        public PlayerIndex? PlayerIndexInControl { get; set; }
 
-        public PlayerIndex? PlayerIndexInControl
-        {
-            get => indexInControl;
-            set => indexInControl = value;
-        }
+        public List<GameComponent> Components { get; }
 
-        public List<GameComponent> Components => components;
+        protected IStateManager Manager { get; }
+        protected ContentManager Content { get; }
 
         #endregion
 
@@ -43,10 +29,10 @@ namespace DragonRider.Shared.Api.GameState
 
         public GameState(Microsoft.Xna.Framework.Game game) : base(game)
         {
-            manager = (IStateManager) Game.Services.GetService(typeof(IStateManager));
-            content = game.Content;
-            tag = this;
-            components = new List<GameComponent>();
+            Tag = this;
+            Components = new List<GameComponent>();
+            Manager = (IStateManager) Game.Services.GetService(typeof(IStateManager));
+            Content = game.Content;
         }
 
         #endregion
@@ -55,7 +41,7 @@ namespace DragonRider.Shared.Api.GameState
 
         public override void Update(GameTime gameTime)
         {
-            foreach (var component in components)
+            foreach (var component in Components)
                 if (component.Enabled)
                     component.Update(gameTime);
 
@@ -66,14 +52,14 @@ namespace DragonRider.Shared.Api.GameState
         {
             base.Draw(gameTime);
 
-            foreach (var component in components)
+            foreach (var component in Components)
                 if (component is DrawableGameComponent gameComponent && gameComponent.Visible)
                     gameComponent.Draw(gameTime);
         }
 
         protected internal virtual void StateChanged(object sender, EventArgs e)
         {
-            if (manager.CurrentState == tag)
+            if (Manager.CurrentState == Tag)
                 Show();
             else
                 Hide();
@@ -84,7 +70,7 @@ namespace DragonRider.Shared.Api.GameState
             Enabled = true;
             Visible = true;
 
-            foreach (var component in components)
+            foreach (var component in Components)
             {
                 component.Enabled = true;
                 if (component is DrawableGameComponent gameComponent)
@@ -97,7 +83,7 @@ namespace DragonRider.Shared.Api.GameState
             Enabled = false;
             Visible = false;
 
-            foreach (var component in components)
+            foreach (var component in Components)
             {
                 component.Enabled = false;
                 if (component is DrawableGameComponent gameComponent)

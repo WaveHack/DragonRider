@@ -56,10 +56,10 @@ namespace DragonRider.Shared.Game.GameState
 
             _textRenderer.SpriteBatch = GameRef.SpriteBatch;
 
-            _font = content.Load<SpriteFont>("Fonts/FreePixel");
+            _font = Content.Load<SpriteFont>("Fonts/FreePixel");
             _textRenderer.SpriteFont = _font;
 
-            _map = content.Load<TiledMap>("Maps/Test");
+            _map = Content.Load<TiledMap>("Maps/Test");
             _mapRenderer = new TiledMapRenderer(GameRef.GraphicsDevice);
         }
 
