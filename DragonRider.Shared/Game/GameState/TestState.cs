@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using DragonRider.Shared.Api.DataTypes.Text;
 using DragonRider.Shared.Api.Extensions;
-using DragonRider.Shared.Api.GameState;
 using DragonRider.Shared.Api.Helpers.Render;
 using DragonRider.Shared.Game.Component;
 using Microsoft.Xna.Framework;
@@ -12,7 +12,7 @@ using MonoGame.Extended.Tiled.Graphics;
 
 namespace DragonRider.Shared.Game.GameState
 {
-    public class TestState : GameState
+    public class TestState : BaseState
     {
         #region Fields
 
@@ -41,7 +41,7 @@ namespace DragonRider.Shared.Game.GameState
 
         public override void Initialize()
         {
-            _player.Initialize(GameRef.SpriteBatch);
+            _player.Initialize(Game.SpriteBatch);
 
             base.Initialize();
         }
@@ -50,13 +50,13 @@ namespace DragonRider.Shared.Game.GameState
         {
             base.LoadContent();
 
-            _textRenderer.SpriteBatch = GameRef.SpriteBatch;
+            _textRenderer.SpriteBatch = Game.SpriteBatch;
 
             _font = Content.Load<SpriteFont>("Fonts/FreePixel");
             _textRenderer.SpriteFont = _font;
 
             _map = Content.Load<TiledMap>("Maps/Test");
-            _mapRenderer = new TiledMapRenderer(GameRef.GraphicsDevice);
+            _mapRenderer = new TiledMapRenderer(Game.GraphicsDevice);
         }
 
         public override void Update(GameTime gameTime)
@@ -65,36 +65,40 @@ namespace DragonRider.Shared.Game.GameState
             const float speed = 8 * Constants.PPU;
 
             if (keyboardState.IsKeyDown(Keys.Up))
-                GameRef.Camera.Move(new Vector2(0, -speed * GameRef.Delta));
+                Game.Camera.Move(new Vector2(0, -speed * Game.Delta));
             else if (keyboardState.IsKeyDown(Keys.Down))
-                GameRef.Camera.Move(new Vector2(0, speed * GameRef.Delta));
+                Game.Camera.Move(new Vector2(0, speed * Game.Delta));
 
             if (keyboardState.IsKeyDown(Keys.Left))
-                GameRef.Camera.Move(new Vector2(-speed * GameRef.Delta, 0));
+                Game.Camera.Move(new Vector2(-speed * Game.Delta, 0));
             else if (keyboardState.IsKeyDown(Keys.Right))
-                GameRef.Camera.Move(new Vector2(speed * GameRef.Delta, 0));
+                Game.Camera.Move(new Vector2(speed * Game.Delta, 0));
 
             if (keyboardState.IsKeyDown(Keys.OemMinus))
-                GameRef.Camera.Zoom /= 1 + .5f * GameRef.Delta;
+                Game.Camera.Zoom /= 1 + .5f * Game.Delta;
             else if (keyboardState.IsKeyDown(Keys.OemPlus))
-                GameRef.Camera.Zoom *= 1 + .5f * GameRef.Delta;
+                Game.Camera.Zoom *= 1 + .5f * Game.Delta;
             else if (keyboardState.IsKeyDown(Keys.D0))
-                GameRef.Camera.Zoom = 1;
+                Game.Camera.Zoom = 1;
 
-            GameRef.Camera.Zoom = GameRef.Camera.Zoom.Clamp(1f, 2f);
+            Game.Camera.Zoom = Game.Camera.Zoom.Clamp(1f, 2f);
 
             float mapWidthInTiles = 40;
             float mapHeightInTiles = 22.5f;
 
-            GameRef.Camera.Position = Vector2.Clamp(
-                GameRef.Camera.Position,
+            Debug.WriteLine("Game: " + Game);
+            Debug.WriteLine("Came Camera: " + Game.Camera);
+            Debug.WriteLine("Came Camera Position: " + Game.Camera.Position);
+
+            Game.Camera.Position = Vector2.Clamp(
+                Game.Camera.Position,
                 new Vector2(
-                    -(_map.WidthInPixels - _map.WidthInPixels * (1 / GameRef.Camera.Zoom)) / 2,
-                    -(_map.HeightInPixels - _map.HeightInPixels * (1 / GameRef.Camera.Zoom)) / 2
+                    -(_map.WidthInPixels - _map.WidthInPixels * (1 / Game.Camera.Zoom)) / 2,
+                    -(_map.HeightInPixels - _map.HeightInPixels * (1 / Game.Camera.Zoom)) / 2
                 ),
                 new Vector2(
-                    ((mapWidthInTiles * Constants.PPU) - Constants.VIEWPORT_WIDTH) + (_map.WidthInPixels - _map.WidthInPixels * (1 / GameRef.Camera.Zoom)) / 2,
-                    ((mapHeightInTiles * Constants.PPU) - Constants.VIEWPORT_HEIGHT) + (_map.HeightInPixels - _map.HeightInPixels * (1 / GameRef.Camera.Zoom)) / 2
+                    ((mapWidthInTiles * Constants.PPU) - Constants.VIEWPORT_WIDTH) + (_map.WidthInPixels - _map.WidthInPixels * (1 / Game.Camera.Zoom)) / 2,
+                    ((mapHeightInTiles * Constants.PPU) - Constants.VIEWPORT_HEIGHT) + (_map.HeightInPixels - _map.HeightInPixels * (1 / Game.Camera.Zoom)) / 2
                 )
             );
 
@@ -105,9 +109,9 @@ namespace DragonRider.Shared.Game.GameState
 
         public override void Draw(GameTime gameTime)
         {
-            Matrix viewMatrix = GameRef.Camera.GetViewMatrix();
+            Matrix viewMatrix = Game.Camera.GetViewMatrix();
 
-            GameRef.SpriteBatch.Begin(
+            SpriteBatch.Begin(
                 transformMatrix: viewMatrix,
                 samplerState: SamplerState.PointClamp
             );
@@ -137,20 +141,20 @@ namespace DragonRider.Shared.Game.GameState
                 offset.X += _font.MeasureString(coloredText.Text).X;
             }
 
-            GameRef.SpriteBatch.End();
+            SpriteBatch.End();
 
             const int textHeight = 24;
 
-            GameRef.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
             _textRenderer.DrawShadowed(
-                "Camera: x" + GameRef.Camera.Position.X.ToString("0.00") + " y" +
-                GameRef.Camera.Position.Y.ToString("0.00"),
+                "Camera: x" + Game.Camera.Position.X.ToString("0.00") + " y" +
+                Game.Camera.Position.Y.ToString("0.00"),
                 Vector2.Zero + new Vector2(0, textHeight * 0), Color.White, 2f);
-            _textRenderer.DrawShadowed("Zoom: " + GameRef.Camera.Zoom.ToString("0.00"),
+            _textRenderer.DrawShadowed("Zoom: " + Game.Camera.Zoom.ToString("0.00"),
                 Vector2.Zero + new Vector2(0, textHeight * 1), Color.White, 2f);
-            _textRenderer.DrawShadowed("Delta: " + GameRef.Delta.ToString("0.0000"),
+            _textRenderer.DrawShadowed("Delta: " + Game.Delta.ToString("0.0000"),
                 Vector2.Zero + new Vector2(0, textHeight * 2), Color.White, 2f);
-            GameRef.SpriteBatch.End();
+            SpriteBatch.End();
         }
 
         #endregion

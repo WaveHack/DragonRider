@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace DragonRider.Shared.Api.GameState
 {
@@ -13,25 +14,35 @@ namespace DragonRider.Shared.Api.GameState
         public GameState Tag { get; }
         public List<GameComponent> Components { get; }
 
-        protected IStateManager Manager { get; }
         protected ContentManager Content { get; }
+        protected new Game Game { get; }
+        protected IStateManager Manager { get; }
+        protected SpriteBatch SpriteBatch { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public GameState(Microsoft.Xna.Framework.Game game) : base(game)
+        public GameState(Game game) : base(game)
         {
             PlayerIndexInControl = PlayerIndex.One;
             Tag = this;
             Components = new List<GameComponent>();
-            Manager = (IStateManager) Game.Services.GetService(typeof(IStateManager));
+            Game = game;
             Content = game.Content;
+            Manager = (IStateManager) Game.Services.GetService(typeof(IStateManager));
         }
 
         #endregion
 
         #region Methods
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SpriteBatch = Game.SpriteBatch;
+        }
 
         public override void Update(GameTime gameTime)
         {

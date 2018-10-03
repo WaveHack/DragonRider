@@ -1,8 +1,6 @@
 ﻿using DragonRider.Shared.Api;
-using DragonRider.Shared.Api.GameState;
 using DragonRider.Shared.Game.GameState;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.ViewportAdapters;
