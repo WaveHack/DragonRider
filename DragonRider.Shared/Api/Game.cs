@@ -46,6 +46,7 @@ namespace DragonRider.Shared.Api
         protected override void Initialize()
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
+            Services.AddService(typeof(SpriteBatch), SpriteBatch);
 
             base.Initialize();
         }
