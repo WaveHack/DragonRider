@@ -73,6 +73,8 @@
   <ItemGroup>
     <Compile Include="Api\DataTypes\Text\ColoredText.cs" />
     <Compile Include="Api\Extensions\ComparableExtensions.cs" />
+    <Compile Include="Api\Game.cs" />
+    <Compile Include="Api\GameConfig.cs" />
     <Compile Include="Api\GameState\GameState.cs" />
     <Compile Include="Api\GameState\StateManager.cs" />
     <Compile Include="Api\Helpers\Render\TextRenderer.cs" />
