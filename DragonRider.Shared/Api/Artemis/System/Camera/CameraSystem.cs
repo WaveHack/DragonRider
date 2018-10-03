@@ -23,8 +23,6 @@ namespace DragonRider.Shared.Api.Artemis.System.Camera
 
         public CameraSystem(int viewportWidth, int viewportHeight)
         {
-            Game.Services.AddService(this);
-
             _viewportWidth = viewportWidth;
             _viewportHeight = viewportHeight;
         }
