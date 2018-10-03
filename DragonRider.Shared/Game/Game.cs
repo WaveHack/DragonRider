@@ -33,11 +33,11 @@ namespace DragonRider.Shared.Game
 
         protected override void Initialize()
         {
-            base.Initialize();
-
             var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Constants.ViewportWidth, Constants.ViewportHeight);
             Camera = new Camera2D(viewportAdapter);
             Services.AddService(Camera);
+
+            base.Initialize();
         }
 
         protected override void Update(GameTime gameTime)

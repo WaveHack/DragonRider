@@ -72,6 +72,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Artemis\Component\Basic\PositionComponent.cs" />
+    <Compile Include="Api\Artemis\Component\Graphics\TextureComponent.cs" />
+    <Compile Include="Api\Artemis\System\Render\TextureRenderSystem.cs" />
     <Compile Include="Api\DataTypes\Text\ColoredText.cs" />
     <Compile Include="Api\Extensions\ComparableExtensions.cs" />
     <Compile Include="Api\Game.cs" />
