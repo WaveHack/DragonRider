@@ -25,7 +25,7 @@ namespace DragonRider.Shared.Api
 
             Content.RootDirectory = "Content";
 
-            Services.AddService(typeof(Game), this);
+            Services.AddService(this);
 
             Graphics = new GraphicsDeviceManager(this)
             {
@@ -46,7 +46,7 @@ namespace DragonRider.Shared.Api
         protected override void Initialize()
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
-            Services.AddService(typeof(SpriteBatch), SpriteBatch);
+            Services.AddService(SpriteBatch);
 
             base.Initialize();
         }
