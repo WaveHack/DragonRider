@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using DragonRider.Shared.Api.DataTypes.Text;
 using DragonRider.Shared.Api.Extensions;
 using DragonRider.Shared.Api.Helpers.Render;
@@ -7,6 +8,7 @@ using DragonRider.Shared.Game.Component;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Entities;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Graphics;
 
@@ -15,6 +17,8 @@ namespace DragonRider.Shared.Game.GameState
     public class TestState : BaseState
     {
         #region Fields
+
+        private EntityComponentSystem _ecs;
 
         private SpriteFont _font;
         private readonly TextRenderer _textRenderer;
@@ -41,6 +45,11 @@ namespace DragonRider.Shared.Game.GameState
 
         public override void Initialize()
         {
+            _ecs = new EntityComponentSystem(Game);
+            Game.Services.AddService(_ecs);
+
+//            _ecs.Scan(Assembly.GetExecutingAssembly());
+
 //            _player.Initialize(Game.SpriteBatch);
 
             base.Initialize();
@@ -101,6 +110,8 @@ namespace DragonRider.Shared.Game.GameState
 //            _mapRenderer.Update(_map, gameTime);
 
             base.Update(gameTime);
+
+            _ecs.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
@@ -114,6 +125,8 @@ namespace DragonRider.Shared.Game.GameState
 
 //            _mapRenderer.Draw(_map.GetLayer("Background"), viewMatrix);
 //            _mapRenderer.Draw(_map.GetLayer("Wall"), viewMatrix);
+
+            _ecs.Draw(gameTime);
 
             base.Draw(gameTime);
 
