@@ -25,6 +25,8 @@ namespace DragonRider.Shared.Api
 
             Content.RootDirectory = "Content";
 
+//            Services.AddService(typeof(Game), this);
+
             Graphics = new GraphicsDeviceManager(this)
             {
                 PreferredBackBufferWidth = config.WindowWidth,
