@@ -37,6 +37,7 @@ namespace DragonRider.Shared.Game
 
             var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Constants.ViewportWidth, Constants.ViewportHeight);
             Camera = new Camera2D(viewportAdapter);
+            Services.AddService(Camera);
         }
 
         protected override void Update(GameTime gameTime)

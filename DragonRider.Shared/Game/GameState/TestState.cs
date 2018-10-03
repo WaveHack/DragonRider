@@ -8,6 +8,7 @@ using DragonRider.Shared.Game.Component;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
 using MonoGame.Extended.Entities;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Graphics;
@@ -48,7 +49,8 @@ namespace DragonRider.Shared.Game.GameState
             _ecs = new EntityComponentSystem(Game);
             Game.Services.AddService(_ecs);
 
-//            _ecs.Scan(Assembly.GetExecutingAssembly());
+            _ecs.Scan(Assembly.GetExecutingAssembly());
+            _ecs.Initialize();
 
 //            _player.Initialize(Game.SpriteBatch);
 

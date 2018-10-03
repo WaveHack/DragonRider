@@ -72,9 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Artemis\Component\Basic\PositionComponent.cs" />
-    <Compile Include="Api\Artemis\System\Camera\CameraSystem.cs" />
-    <Compile Include="Api\Artemis\System\PassiveSystem.cs" />
-    <Compile Include="Api\Artemis\System\ServiceSystem.cs" />
     <Compile Include="Api\DataTypes\Text\ColoredText.cs" />
     <Compile Include="Api\Extensions\ComparableExtensions.cs" />
     <Compile Include="Api\Game.cs" />
