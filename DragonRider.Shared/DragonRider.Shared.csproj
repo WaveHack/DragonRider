@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -71,6 +71,7 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Artemis\Component\Basic\PositionComponent.cs" />
     <Compile Include="Api\DataTypes\Text\ColoredText.cs" />
     <Compile Include="Api\Extensions\ComparableExtensions.cs" />
     <Compile Include="Api\Game.cs" />
@@ -91,7 +92,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Api\Artemis\System" />
     <Folder Include="Core" />
+    <Folder Include="Game\Artemis\Component" />
+    <Folder Include="Game\Artemis\EntityFactory" />
+    <Folder Include="Game\Artemis\System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
