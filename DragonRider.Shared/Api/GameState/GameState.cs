@@ -16,7 +16,7 @@ namespace DragonRider.Shared.Api.GameState
 
         protected ContentManager Content { get; }
         protected new Game Game { get; }
-        protected IStateManager Manager { get; }
+        protected IGameStateManager Manager { get; }
         protected SpriteBatch SpriteBatch { get; private set; }
 
         #endregion
@@ -30,7 +30,7 @@ namespace DragonRider.Shared.Api.GameState
             Components = new List<GameComponent>();
             Game = game;
             Content = game.Content;
-            Manager = (IStateManager) Game.Services.GetService(typeof(IStateManager));
+            Manager = (IGameStateManager) Game.Services.GetService(typeof(IGameStateManager));
         }
 
         #endregion

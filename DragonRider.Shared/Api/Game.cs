@@ -10,7 +10,7 @@ namespace DragonRider.Shared.Api
 
         public GameConfig Config { get; }
         public GraphicsDeviceManager Graphics { get; }
-        public StateManager StateManager { get; }
+        public GameStateManager GameStateManager { get; }
 
         public float Delta { get; private set; }
         public SpriteBatch SpriteBatch { get; private set; }
@@ -33,8 +33,8 @@ namespace DragonRider.Shared.Api
                 PreferredBackBufferHeight = config.WindowHeight
             };
 
-            StateManager = new StateManager(this);
-            Components.Add(StateManager);
+            GameStateManager = new GameStateManager(this);
+            Components.Add(GameStateManager);
 
             Window.AllowUserResizing = config.AllowWindowResizing;
         }

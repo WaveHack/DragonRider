@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace DragonRider.Shared.Api.GameState
 {
-    public interface IStateManager
+    public interface IGameStateManager
     {
         event EventHandler StateChanged;
 
@@ -17,7 +17,7 @@ namespace DragonRider.Shared.Api.GameState
         bool ContainsState(GameState state);
     }
 
-    public class StateManager : GameComponent, IStateManager
+    public class GameStateManager : GameComponent, IGameStateManager
     {
         #region Constants
 
@@ -41,9 +41,9 @@ namespace DragonRider.Shared.Api.GameState
 
         #region Constructors
 
-        public StateManager(Microsoft.Xna.Framework.Game game) : base(game)
+        public GameStateManager(Microsoft.Xna.Framework.Game game) : base(game)
         {
-            Game.Services.AddService(typeof(IStateManager), this);
+            Game.Services.AddService(typeof(IGameStateManager), this);
         }
 
         #endregion

@@ -24,7 +24,7 @@ namespace DragonRider.Shared.Game
             ScreenClearColor = new Color(41, 41, 41)
         })
         {
-            StateManager.ChangeState(new TestState(this), PlayerIndex.One);
+            GameStateManager.ChangeState(new TestState(this), PlayerIndex.One);
         }
 
         #endregion
