@@ -12,11 +12,7 @@ using MonoGame.Extended.Tiled.Graphics;
 
 namespace DragonRider.Shared.Game.GameState
 {
-    public interface ITestState : IGameState
-    {
-    }
-
-    public class TestState : GameState, ITestState
+    public class TestState : GameState
     {
         #region Fields
 

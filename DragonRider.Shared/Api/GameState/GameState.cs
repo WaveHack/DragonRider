@@ -5,13 +5,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace DragonRider.Shared.Api.GameState
 {
-    public interface IGameState
-    {
-        GameState Tag { get; }
-        PlayerIndex? PlayerIndexInControl { get; set; }
-    }
-
-    public abstract partial class GameState : DrawableGameComponent, IGameState
+    public abstract partial class GameState : DrawableGameComponent
     {
         #region Properties
 
