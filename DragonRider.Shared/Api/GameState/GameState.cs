@@ -9,9 +9,8 @@ namespace DragonRider.Shared.Api.GameState
     {
         #region Properties
 
-        public GameState Tag { get; }
         public PlayerIndex? PlayerIndexInControl { get; set; }
-
+        public GameState Tag { get; }
         public List<GameComponent> Components { get; }
 
         protected IStateManager Manager { get; }
@@ -23,6 +22,7 @@ namespace DragonRider.Shared.Api.GameState
 
         public GameState(Microsoft.Xna.Framework.Game game) : base(game)
         {
+            PlayerIndexInControl = PlayerIndex.One;
             Tag = this;
             Components = new List<GameComponent>();
             Manager = (IStateManager) Game.Services.GetService(typeof(IStateManager));
