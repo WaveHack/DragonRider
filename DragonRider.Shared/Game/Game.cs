@@ -19,8 +19,8 @@ namespace DragonRider.Shared.Game
 
         public Game() : base(new GameConfig
         {
-            WindowWidth = Constants.WINDOW_WIDTH,
-            WindowHeight = Constants.WINDOW_HEIGHT,
+            WindowWidth = Constants.WindowWidth,
+            WindowHeight = Constants.WindowHeight,
             ScreenClearColor = new Color(41, 41, 41)
         })
         {
@@ -35,7 +35,7 @@ namespace DragonRider.Shared.Game
         {
             base.Initialize();
 
-            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
+            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Constants.ViewportWidth, Constants.ViewportHeight);
             Camera = new Camera2D(viewportAdapter);
         }
 

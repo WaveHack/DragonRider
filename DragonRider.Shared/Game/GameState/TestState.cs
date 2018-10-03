@@ -62,7 +62,7 @@ namespace DragonRider.Shared.Game.GameState
         public override void Update(GameTime gameTime)
         {
             var keyboardState = Keyboard.GetState();
-            const float speed = 8 * Constants.PPU;
+            const float speed = 8 * Constants.Ppu;
 
             if (keyboardState.IsKeyDown(Keys.Up))
                 Game.Camera.Move(new Vector2(0, -speed * Game.Delta));
@@ -97,8 +97,8 @@ namespace DragonRider.Shared.Game.GameState
                     -(_map.HeightInPixels - _map.HeightInPixels * (1 / Game.Camera.Zoom)) / 2
                 ),
                 new Vector2(
-                    ((mapWidthInTiles * Constants.PPU) - Constants.VIEWPORT_WIDTH) + (_map.WidthInPixels - _map.WidthInPixels * (1 / Game.Camera.Zoom)) / 2,
-                    ((mapHeightInTiles * Constants.PPU) - Constants.VIEWPORT_HEIGHT) + (_map.HeightInPixels - _map.HeightInPixels * (1 / Game.Camera.Zoom)) / 2
+                    ((mapWidthInTiles * Constants.Ppu) - Constants.ViewportWidth) + (_map.WidthInPixels - _map.WidthInPixels * (1 / Game.Camera.Zoom)) / 2,
+                    ((mapHeightInTiles * Constants.Ppu) - Constants.ViewportHeight) + (_map.HeightInPixels - _map.HeightInPixels * (1 / Game.Camera.Zoom)) / 2
                 )
             );
 
