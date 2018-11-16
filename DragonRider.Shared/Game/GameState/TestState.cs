@@ -80,7 +80,7 @@ namespace DragonRider.Shared.Game.GameState
         public override void Update(GameTime gameTime)
         {
             var keyboardState = Keyboard.GetState();
-            const float speed = 8 * Constants.Ppu;
+            const float speed = 8 * Constants.PixelsPerUnit;
 
             if (keyboardState.IsKeyDown(Keys.Up))
                 Game.Camera.Move(new Vector2(0, -speed * Game.Delta));
