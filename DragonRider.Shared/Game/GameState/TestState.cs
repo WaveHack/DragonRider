@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using DragonRider.Shared.Api.Artemis.Component.Basic;
-using DragonRider.Shared.Api.Artemis.Component.Graphics;
 using DragonRider.Shared.Api.DataTypes.Text;
 using DragonRider.Shared.Api.DataTypes.Extensions;
 using DragonRider.Shared.Api.Helpers.Render;
@@ -11,7 +9,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
-using MonoGame.Extended.Entities;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Graphics;
 
@@ -20,8 +17,6 @@ namespace DragonRider.Shared.Game.GameState
     public class TestState : BaseState
     {
         #region Fields
-
-        private EntityComponentSystem _ecs;
 
         private SpriteFont _font;
 
@@ -49,13 +44,6 @@ namespace DragonRider.Shared.Game.GameState
 
         public override void Initialize()
         {
-            _ecs = new EntityComponentSystem(Game);
-            Game.Services.AddService(_ecs);
-
-            _ecs.Scan(Assembly.GetExecutingAssembly());
-            _ecs.Initialize();
-
-
 //            _player.Initialize(Game.SpriteBatch);
 
             base.Initialize();
@@ -72,11 +60,6 @@ namespace DragonRider.Shared.Game.GameState
 
 //            _map = Content.Load<TiledMap>("Maps/Test");
 //            _mapRenderer = new TiledMapRenderer(Game.GraphicsDevice);
-
-            var testEntity = _ecs.EntityManager.CreateEntity();
-            testEntity.Attach<PositionComponent>(component => component.Position = new Vector2(50, 50));
-            testEntity.Attach<TextureComponent>(component =>
-                component.Texture2D = Content.Load<Texture2D>("Graphics/Sprites/Player"));
         }
 
         public override void Update(GameTime gameTime)
@@ -121,13 +104,10 @@ namespace DragonRider.Shared.Game.GameState
 //            _mapRenderer.Update(_map, gameTime);
 
             base.Update(gameTime);
-
-            _ecs.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            _ecs.Draw(gameTime);
             base.Draw(gameTime);
 
             var viewMatrix = Game.Camera.GetViewMatrix();
