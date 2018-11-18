@@ -93,11 +93,5 @@
     <None Include="Content\**\*" Exclude="Content\bin\**;Content\obj\**" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core" />
-    <Folder Include="Game\Artemis\Component" />
-    <Folder Include="Game\Artemis\EntityFactory" />
-    <Folder Include="Game\Artemis\System" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
