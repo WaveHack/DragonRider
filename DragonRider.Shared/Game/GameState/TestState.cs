@@ -4,7 +4,7 @@ using System.Reflection;
 using DragonRider.Shared.Api.Artemis.Component.Basic;
 using DragonRider.Shared.Api.Artemis.Component.Graphics;
 using DragonRider.Shared.Api.DataTypes.Text;
-using DragonRider.Shared.Api.Extensions;
+using DragonRider.Shared.Api.DataTypes.Extensions;
 using DragonRider.Shared.Api.Helpers.Render;
 using DragonRider.Shared.Game.Component;
 using Microsoft.Xna.Framework;
@@ -24,6 +24,7 @@ namespace DragonRider.Shared.Game.GameState
         private EntityComponentSystem _ecs;
 
         private SpriteFont _font;
+
         private readonly TextRenderer _textRenderer;
 //        private TiledMap _map;
 //        private TiledMapRenderer _mapRenderer;
@@ -74,7 +75,8 @@ namespace DragonRider.Shared.Game.GameState
 
             var testEntity = _ecs.EntityManager.CreateEntity();
             testEntity.Attach<PositionComponent>(component => component.Position = new Vector2(50, 50));
-            testEntity.Attach<TextureComponent>(component => component.Texture2D = Content.Load<Texture2D>("Graphics/Sprites/Player"));
+            testEntity.Attach<TextureComponent>(component =>
+                component.Texture2D = Content.Load<Texture2D>("Graphics/Sprites/Player"));
         }
 
         public override void Update(GameTime gameTime)

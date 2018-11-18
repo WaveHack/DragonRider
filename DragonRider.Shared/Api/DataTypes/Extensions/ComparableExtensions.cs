@@ -1,6 +1,6 @@
 using System;
 
-namespace DragonRider.Shared.Api.Extensions
+namespace DragonRider.Shared.Api.DataTypes.Extensions
 {
     public static class ComparableExtensions
     {
