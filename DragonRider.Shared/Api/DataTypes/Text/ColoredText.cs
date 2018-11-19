@@ -4,8 +4,8 @@ namespace DragonRider.Shared.Api.DataTypes.Text
 {
     public struct ColoredText
     {
-        public readonly string Text;
-        public readonly Color Color;
+        public string Text { get; }
+        public Color Color { get; }
 
         public ColoredText(string text, Color color)
         {
