@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace DragonRider.Shared.Api.DataTypes.Text
+namespace DragonRider.Shared.Api.DataTypes
 {
     public struct ColoredText
     {

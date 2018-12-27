@@ -67,18 +67,20 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\DataTypes\ColoredText.cs" />
     <Compile Include="Api\DataTypes\Extensions\ComparableExtensions.cs" />
-    <Compile Include="Api\DataTypes\Text\ColoredText.cs" />
     <Compile Include="Api\Game.cs" />
     <Compile Include="Api\GameConfig.cs" />
-    <Compile Include="Api\GameState\GameState.cs" />
-    <Compile Include="Api\GameState\GameStateManager.cs" />
     <Compile Include="Api\Helpers\Render\TextRenderer.cs" />
+    <Compile Include="Api\Scene\Scene.cs" />
+    <Compile Include="Api\Scene\SceneManager.cs" />
+    <Compile Include="Api\System\System.cs" />
     <Compile Include="Game\Component\Player.cs" />
     <Compile Include="Game\Constants.cs" />
     <Compile Include="Game\Game.cs" />
-    <Compile Include="Game\GameState\BaseState.cs" />
     <Compile Include="Game\GameState\TestState.cs" />
+    <Compile Include="Game\Scenes\TestScene.cs" />
+    <Compile Include="Game\Systems\CameraSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

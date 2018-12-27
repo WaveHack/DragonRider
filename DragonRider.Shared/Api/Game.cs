@@ -1,31 +1,25 @@
-using DragonRider.Shared.Api.GameState;
+using System.Diagnostics;
+using DragonRider.Shared.Api.Scene;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DragonRider.Shared.Api
 {
-    public class Game : Microsoft.Xna.Framework.Game
+    public abstract class Game : Microsoft.Xna.Framework.Game
     {
-        #region Properties
-
-        public GameConfig Config { get; }
+        // System Properties
         public GraphicsDeviceManager Graphics { get; }
-        public GameStateManager GameStateManager { get; }
 
-        public float Delta { get; private set; }
-        public SpriteBatch SpriteBatch { get; private set; }
-
-        #endregion
-
-        #region Constructors
+        // Properties
+        public GameConfig Config { get; }
+//        public float Delta { get; private set; }
+        public SceneManager SceneManager { get; private set; }
 
         public Game(GameConfig config)
         {
-            Config = config;
-
-            Content.RootDirectory = "Content";
-
             Services.AddService(this);
+
+            Config = config;
 
             Graphics = new GraphicsDeviceManager(this)
             {
@@ -33,38 +27,40 @@ namespace DragonRider.Shared.Api
                 PreferredBackBufferHeight = config.WindowHeight
             };
 
-            GameStateManager = new GameStateManager(this);
-            Components.Add(GameStateManager);
-
+            Content.RootDirectory = "Content";
             Window.AllowUserResizing = config.AllowWindowResizing;
         }
 
-        #endregion
-
-        #region Methods
-
         protected override void Initialize()
         {
-            SpriteBatch = new SpriteBatch(GraphicsDevice);
-            Services.AddService(SpriteBatch);
+            Debug.WriteLine("[Api] Game.Initialize()");
+
+            Debug.WriteLine("[Api] - Register service: SpriteBatch");
+            Services.AddService(new SpriteBatch(GraphicsDevice));
+
+            SceneManager = new SceneManager(this);
 
             base.Initialize();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            Delta = (float) gameTime.ElapsedGameTime.TotalSeconds;
+//            Delta = (float) gameTime.ElapsedGameTime.TotalSeconds;
+//            SceneManager.Update(Delta);
 
-            base.Update(gameTime);
+            var delta = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            SceneManager.Update(delta);
+
+//            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             Graphics.GraphicsDevice.Clear(Config.ScreenClearColor);
 
-            base.Draw(gameTime);
-        }
+            SceneManager.Draw();
 
-        #endregion
+//            base.Draw(gameTime);
+        }
     }
 }

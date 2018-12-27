@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -13,22 +14,26 @@ namespace DragonRider.Shared.Game.Component
 
         protected Texture2D Texture { get; private set; }
 
-        public Player(Game game, Vector2 position, Vector2 bounds, Vector2 origin = new Vector2()) : base(game)
+        public Player(Api.Game game, Vector2 position, Vector2 bounds, Vector2 origin = new Vector2()) : base(game)
         {
             Position = position;
             Bounds = bounds;
             Origin = origin;
         }
 
-        public void Initialize(SpriteBatch spriteBatch)
+        public void Initialize()
         {
-            SpriteBatch = spriteBatch;
+            Debug.WriteLine("Player.Initialize");
+
+            SpriteBatch = Game.Services.GetService<SpriteBatch>();
 
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
+            Debug.WriteLine("Player.LoadContent");
+
             Texture = Game.Content.Load<Texture2D>("Graphics/Sprites/Player");
 
             base.LoadContent();
